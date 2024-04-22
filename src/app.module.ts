@@ -11,6 +11,8 @@ import { UrlModule } from './url/url.module';
       database: 'URL.sqlite',
       entities: [Url],
       synchronize: true,
+      //   migrationsRun: true,
+      //   dropSchema: true,
     }),
     UrlModule,
     ConfigModule.forRoot(),

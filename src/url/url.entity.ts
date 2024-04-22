@@ -15,5 +15,5 @@ export class Url {
   hash: string;
 
   @Column()
-  redirects: number;
+  visited: number;
 }

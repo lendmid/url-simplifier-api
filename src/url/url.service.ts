@@ -32,8 +32,7 @@ export class UrlService {
 
       const shortUrl = `${process.env.BASE_URL}/${hash}`;
 
-      url = this.repo.create({ hash, longUrl, shortUrl });
-      this.repo.save(url);
+      url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
 
       return url.shortUrl;
     } catch (error) {
@@ -60,10 +59,8 @@ export class UrlService {
       const url = await this.repo.findOneBy({ hash });
 
       if (url) {
-        await this.repo.save({
-          ...url,
-          redirects: url.redirects ? url.redirects++ : 1,
-        });
+        url.visited = url.visited ? (url.visited += 1) : 1;
+        await this.repo.save(url);
         return url;
       }
       throw new NotFoundException('Url Not Found in Data Base');
