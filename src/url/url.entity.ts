@@ -13,4 +13,7 @@ export class Url {
 
   @Column()
   hash: string;
+
+  @Column()
+  redirects: number;
 }

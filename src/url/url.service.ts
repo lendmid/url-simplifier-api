@@ -58,11 +58,18 @@ export class UrlService {
   async redirect(hash: string) {
     try {
       const url = await this.repo.findOneBy({ hash });
-      if (url) return url;
-      throw new NotFoundException('Resource Not Found');
+
+      if (url) {
+        await this.repo.save({
+          ...url,
+          redirects: url.redirects ? url.redirects++ : 1,
+        });
+        return url;
+      }
+      throw new NotFoundException('Url Not Found in Data Base');
     } catch (error) {
       console.log(error);
-      throw new NotFoundException('Resource Not Found');
+      throw new NotFoundException('Url Not Found in Data Base');
     }
   }
 }
