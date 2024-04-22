@@ -1,0 +1,4 @@
+GET https://url-simplifier-api-production.up.railway.app/urls
+# Content-Type: application/json
+
+# longUrl: "google.com"
