@@ -30,7 +30,7 @@ export class UrlService {
       let url = await this.repo.findOneBy({ longUrl });
       if (url) return url.shortUrl;
 
-      const shortUrl = `${process.env.BASE_URL}/${hash}`;
+      const shortUrl = `${process.env.BASE_URL}:${process.env.PORT}/${hash}`;
 
       url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
 
