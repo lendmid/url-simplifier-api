@@ -1,14 +1,16 @@
-import { Body, Controller, Get, Post, Res, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, Param, Query } from '@nestjs/common';
 import { UrlService } from './url.service';
 import { URLDto } from './dtos/url.dto';
 import { Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Urls')
 @Controller()
 export class UrlController {
   constructor(private service: UrlService) {}
 
   @Post('urls')
-  getShortUrl(
+  async getShortUrl(
     @Body()
     url: URLDto,
   ) {
@@ -16,8 +18,8 @@ export class UrlController {
   }
 
   @Get('urls')
-  getLast5Urls() {
-    return this.service.getLast5Urls();
+  async getUrls(@Query() pagination: { take: number; skip: number }) {
+    return this.service.getUrls(pagination);
   }
 
   @Get(':hash')

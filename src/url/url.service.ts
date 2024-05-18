@@ -41,13 +41,14 @@ export class UrlService {
     }
   }
 
-  async getLast5Urls() {
+  async getUrls({ take = 5, skip = 0 }) {
     try {
-      const urls = await this.repo.find({
-        take: 5,
+      const [urls, total] = await this.repo.findAndCount({
+        take,
+        skip,
         order: { id: 'DESC' },
       });
-      return urls || [];
+      return { urls, total };
     } catch (error) {
       console.log(error);
       throw new NotFoundException('Urls Not Found');
