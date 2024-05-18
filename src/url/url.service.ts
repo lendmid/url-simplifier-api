@@ -55,7 +55,7 @@ export class UrlService {
     }
   }
 
-  async redirect(hash: string) {
+  async getLongUrl(hash: string) {
     try {
       const url = await this.repo.findOneBy({ hash });
 

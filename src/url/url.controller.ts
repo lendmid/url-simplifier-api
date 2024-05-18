@@ -23,12 +23,12 @@ export class UrlController {
   }
 
   @Get(':hash')
-  async redirect(
+  async getLongUrl(
     @Res() res: Response,
     @Param('hash')
     hash: string,
   ) {
-    const url = await this.service.redirect(hash);
+    const url = await this.service.getLongUrl(hash);
     return res.redirect(url.longUrl);
   }
 }
