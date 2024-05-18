@@ -48,7 +48,7 @@ export class UrlService {
         skip,
         order: { id: 'DESC' },
       });
-      return { urls, total };
+      return { urls, pagination: { total, take, skip } };
     } catch (error) {
       console.log(error);
       throw new NotFoundException('Urls Not Found');
