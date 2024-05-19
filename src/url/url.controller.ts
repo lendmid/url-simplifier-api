@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Res, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Res,
+  Param,
+  Query,
+  Headers,
+} from '@nestjs/common';
 import { UrlService } from './url.service';
 import { URLDto } from './dtos/url.dto';
 import { Response } from 'express';
@@ -11,11 +20,8 @@ export class UrlController {
   constructor(private service: UrlService) {}
 
   @Post('urls')
-  async getShortUrl(
-    @Body()
-    url: URLDto,
-  ) {
-    return this.service.getShortUrl(url);
+  async getShortUrl(@Body() url: URLDto, @Headers('host') host: string) {
+    return this.service.getShortUrl(url, host);
   }
 
   @Get('urls')

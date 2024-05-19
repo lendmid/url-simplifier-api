@@ -10,8 +10,6 @@ import { Url } from './url.entity';
 import { URLDto } from './dtos/url.dto';
 import isUrl from 'is-url';
 
-const { HOST, NODE_ENV, PORT } = process.env;
-
 @Injectable()
 export class UrlService {
   constructor(
@@ -19,7 +17,7 @@ export class UrlService {
     private repo: Repository<Url>,
   ) {}
 
-  async getShortUrl(url: URLDto) {
+  async getShortUrl(url: URLDto, host: string) {
     const { longUrl } = url;
 
     if (!isUrl(longUrl)) {
@@ -32,10 +30,7 @@ export class UrlService {
       let url = await this.repo.findOneBy({ longUrl });
       if (url) return url;
 
-      const shortUrl =
-        NODE_ENV === 'development'
-          ? `${HOST}:${PORT}/${hash}`
-          : `${HOST}/${hash}`;
+      const shortUrl = `${host}/${hash}`;
       url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
       return url;
     } catch (error) {
