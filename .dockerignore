@@ -4,6 +4,7 @@
 .gitignore
 .vscode
 .dockerignore
+*.sqlite
 
 # Build dependencies
 node_modules

@@ -12,7 +12,7 @@ dotenv.config({ path: `.env.${environment}` });
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'URL.sqlite',
+      database: 'urls.sqlite',
       entities: [Url],
       synchronize: true,
       //   migrationsRun: true,
