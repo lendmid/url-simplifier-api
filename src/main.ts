@@ -5,7 +5,7 @@ import * as process from 'process';
 import { useContainer } from 'class-validator';
 import { setupSwagger } from './configs/swagger';
 
-const { BASE_URL, PORT } = process.env;
+const { PORT } = process.env;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -21,9 +21,10 @@ async function bootstrap() {
   setupSwagger(app);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-  await app.listen(PORT || 3001, '0.0.0.0', () => {
-    console.log(`Listening on ${BASE_URL}:${PORT || 3001}`);
-  });
+  await app.listen(PORT || 3001, '0.0.0.0');
+
+  console.log('host: ', await app.getUrl());
+  console.log(`NODE_ENV: `, process.env.NODE_ENV);
 }
 
 bootstrap();
