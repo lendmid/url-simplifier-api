@@ -10,7 +10,7 @@ import { Url } from './url.entity';
 import { URLDto } from './dtos/url.dto';
 import isUrl from 'is-url';
 
-const { BASE_URL, NODE_ENV, PORT } = process.env;
+const { HOST, NODE_ENV, PORT } = process.env;
 
 @Injectable()
 export class UrlService {
@@ -34,8 +34,8 @@ export class UrlService {
 
       const shortUrl =
         NODE_ENV === 'development'
-          ? `${BASE_URL}:${PORT}/${hash}`
-          : `${BASE_URL}/${hash}`;
+          ? `${HOST}:${PORT}/${hash}`
+          : `${HOST}/${hash}`;
       url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
       return url;
     } catch (error) {

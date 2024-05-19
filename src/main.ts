@@ -22,7 +22,7 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(PORT || 3001, BASE_URL || '0.0.0.0', () => {
-    console.log(`Listening on ${BASE_URL || '0.0.0.0'}:${PORT || 3001}`);
+    console.log(`Listening on ${BASE_URL}:${PORT || 3001}`);
   });
 }
 
