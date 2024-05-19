@@ -33,25 +33,24 @@ export class UrlService {
       const shortUrl = `${process.env.BASE_URL}:${process.env.PORT}/${hash}`;
 
       url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
-
-      return url.shortUrl;
+      return url;
     } catch (error) {
       console.log(error);
-      throw new UnprocessableEntityException('Server Error');
+      throw new UnprocessableEntityException('Server Error', error);
     }
   }
 
-  async getUrls({ take = 5, skip = 0 }) {
+  async getUrls({ pageSize = 5, current = 0 }) {
     try {
       const [urls, total] = await this.repo.findAndCount({
-        take,
-        skip,
+        take: pageSize,
+        skip: current,
         order: { id: 'DESC' },
       });
-      return { urls, pagination: { total, take, skip } };
+      return { urls, pagination: { total, pageSize, current } };
     } catch (error) {
       console.log(error);
-      throw new NotFoundException('Urls Not Found');
+      throw new NotFoundException('Urls Not Found', error);
     }
   }
 
@@ -67,7 +66,7 @@ export class UrlService {
       throw new NotFoundException('Url Not Found in Data Base');
     } catch (error) {
       console.log(error);
-      throw new NotFoundException('Url Not Found in Data Base');
+      throw new NotFoundException('Url Not Found in Data Base', error);
     }
   }
 }

@@ -3,6 +3,7 @@ import { UrlService } from './url.service';
 import { URLDto } from './dtos/url.dto';
 import { Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
+import { PaginationDto } from 'src/common/pagination.dto';
 
 @ApiTags('Urls')
 @Controller()
@@ -18,7 +19,7 @@ export class UrlController {
   }
 
   @Get('urls')
-  async getUrls(@Query() pagination: { take: number; skip: number }) {
+  async getUrls(@Query() pagination: PaginationDto) {
     return this.service.getUrls(pagination);
   }
 

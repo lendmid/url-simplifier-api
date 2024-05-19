@@ -19,6 +19,7 @@ async function bootstrap() {
   setupSwagger(app);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-  await app.listen(process.env.PORT || 3001, '0.0.0.0');
+  await app.listen(process.env.PORT || 3001, process.env.BASE_URL || '0.0.0.0');
 }
+
 bootstrap();
