@@ -14,7 +14,7 @@ dotenv.config({ path: `.env.${environment}` });
       type: 'sqlite',
       database: 'urls.sqlite',
       entities: [Url],
-      synchronize: true,
+      synchronize: environment === 'development',
       //   migrationsRun: true,
       //   dropSchema: true,
     }),
