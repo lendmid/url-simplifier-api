@@ -39,11 +39,11 @@ export class UrlService {
     }
   }
 
-  async getUrls({ pageSize = 5, current = 0 }) {
+  async getUrls({ pageSize = 5, current = 1 }) {
     try {
       const [urls, total] = await this.repo.findAndCount({
         take: pageSize,
-        skip: current,
+        skip: current - 1,
         order: { id: 'DESC' },
       });
       return { urls, pagination: { total, pageSize, current } };
