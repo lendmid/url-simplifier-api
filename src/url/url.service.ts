@@ -41,7 +41,6 @@ export class UrlService {
 
   async getUrls({ pageSize = 5, current = 1 }) {
     try {
-      console.log('Current', current);
       const [urls, total] = await this.repo.findAndCount({
         take: pageSize,
         skip: current - 1,

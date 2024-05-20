@@ -30,7 +30,7 @@ export class UrlController {
   }
 
   @Get(':hash')
-  async rediLongUrl(
+  async getLongUrl(
     @Res() res: Response,
     @Param('hash')
     hash: string,
