@@ -4,6 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
+RUN npm run migration:generate
 RUN npm run build
 
 EXPOSE 3001
