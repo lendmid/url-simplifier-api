@@ -17,7 +17,7 @@ export class UrlService {
     private repo: Repository<Url>,
   ) {}
 
-  async getShortUrl(url: URLDto, host: string) {
+  async shortUrl(url: URLDto, host: string) {
     const { longUrl } = url;
 
     if (!isUrl(longUrl)) {
@@ -41,6 +41,7 @@ export class UrlService {
 
   async getUrls({ pageSize = 5, current = 1 }) {
     try {
+      console.log('Current', current);
       const [urls, total] = await this.repo.findAndCount({
         take: pageSize,
         skip: current - 1,
