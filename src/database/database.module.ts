@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         logging: process.env.NODE_ENV === 'development',
         autoLoadEntities: true,
         migrationsRun: true,
+        synchronize: false,
       }),
     }),
   ],

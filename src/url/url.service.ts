@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Url } from './url.entity';
 import { URLDto } from './dtos/url.dto';
 import isUrl from 'is-url';
+import base62 from 'base62/lib/ascii';
 
 @Injectable()
 export class UrlService {
@@ -24,13 +25,14 @@ export class UrlService {
       throw new BadRequestException('Should be provided a valid URL');
     }
 
-    const hash = (Math.random() + 1).toString(36).substring(2);
-
     try {
       let url = await this.repo.findOneBy({ longUrl });
       if (url) return url;
 
+      const total = await this.repo.count({});
+      const hash = base62.encode(total);
       const shortUrl = `${host}/${hash}`;
+
       url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
       return url;
     } catch (error) {
@@ -56,7 +58,6 @@ export class UrlService {
   async getLongUrl(hash: string) {
     try {
       const url = await this.repo.findOneBy({ hash });
-
       if (url) {
         url.visited = url.visited ? (url.visited += 1) : 1;
         await this.repo.save(url);
