@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         database: 'urls.sqlite',
         logging: process.env.NODE_ENV === 'development',
         autoLoadEntities: true,
-        migrationsRun: true,
+        // migrationsRun: true,
         synchronize: false,
       }),
     }),
