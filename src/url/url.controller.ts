@@ -20,8 +20,8 @@ export class UrlController {
   constructor(private service: UrlService) {}
 
   @Post('urls')
-  async shortUrl(@Body() url: URLDto, @Headers('host') host: string) {
-    return this.service.shortUrl(url, host);
+  async shortUrl(@Body() url: URLDto, @Headers('origin') origin: string) {
+    return this.service.shortUrl(url, origin);
   }
 
   @Get('urls')

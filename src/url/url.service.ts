@@ -18,7 +18,7 @@ export class UrlService {
     private repo: Repository<Url>,
   ) {}
 
-  async shortUrl(url: URLDto, host: string) {
+  async shortUrl(url: URLDto, origin: string) {
     const { longUrl } = url;
 
     if (!isUrl(longUrl)) {
@@ -31,7 +31,7 @@ export class UrlService {
 
       const total = await this.repo.count({});
       const hash = base62.encode(total);
-      const shortUrl = `${host}/${hash}`;
+      const shortUrl = `${new URL(origin).hostname}/${hash}`;
 
       url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
       return url;
