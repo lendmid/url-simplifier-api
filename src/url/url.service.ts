@@ -31,7 +31,7 @@ export class UrlService {
 
       const total = await this.repo.count({});
       const hash = base62.encode(total);
-      const shortUrl = `${new URL(origin).hostname}/${hash}`;
+      const shortUrl = `${new URL(origin).host}/${hash}`;
 
       url = await this.repo.save({ hash, longUrl, shortUrl, visited: 0 });
       return url;
