@@ -7,6 +7,8 @@ import {
   Param,
   Query,
   Headers,
+  Patch,
+  Delete,
 } from '@nestjs/common';
 import { UrlService } from './url.service';
 import { URLDto } from './dtos/url.dto';
@@ -38,5 +40,15 @@ export class UrlController {
   ) {
     const url = await this.service.getLongUrl(hash);
     return res.redirect(url.longUrl);
+  }
+
+  @Patch('urls/:id')
+  async uppdateLongUrl(@Param('id') id: number, @Body() body: URLDto) {
+    return this.service.uppdateLongUrl(id, body.longUrl);
+  }
+
+  @Delete('urls/:id')
+  async deleteUrl(@Param('id') id: number) {
+    return this.service.deleteUrl(id);
   }
 }

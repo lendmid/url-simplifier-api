@@ -66,4 +66,28 @@ export class UrlService {
       throw new NotFoundException('Urls not found in Data Base', error);
     }
   }
+
+  async uppdateLongUrl(id: number, longUrl: string) {
+    if (!isUrl(longUrl)) {
+      throw new BadRequestException('Should be provided a valid URL');
+    }
+    try {
+      const url = await this.repo.findOneByOrFail({ id });
+      url.longUrl = longUrl;
+      await this.repo.save(url);
+      return url;
+    } catch (error) {
+      throw new NotFoundException('Could not update the URL', error);
+    }
+  }
+
+  async deleteUrl(id: number) {
+    try {
+      const dev = process.env.NODE_ENV === 'development';
+      if (dev) return await this.repo.delete([id]);
+    } catch (error) {
+      console.log(error);
+      throw new NotFoundException('Could not delete the URL', error);
+    }
+  }
 }
