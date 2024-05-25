@@ -11,7 +11,7 @@ import {
 import { UrlService } from './url.service';
 import { URLDto } from './dtos/url.dto';
 import { Response } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { PaginationDto } from 'src/common/pagination.dto';
 
 @ApiTags('Urls')
@@ -20,6 +20,7 @@ export class UrlController {
   constructor(private service: UrlService) {}
 
   @Post('urls')
+  @ApiHeader({ name: 'origin', schema: { default: 'http://localhost:3000' } })
   async shortUrl(@Body() url: URLDto, @Headers('origin') origin: string) {
     return this.service.shortUrl(url, origin);
   }
