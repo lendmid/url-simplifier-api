@@ -83,8 +83,7 @@ export class UrlService {
 
   async deleteUrl(id: number) {
     try {
-      const dev = process.env.NODE_ENV === 'development';
-      if (dev) return await this.repo.delete([id]);
+      return await this.repo.delete([id]);
     } catch (error) {
       console.log(error);
       throw new NotFoundException('Could not delete the URL', error);
