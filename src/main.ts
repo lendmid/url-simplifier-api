@@ -5,12 +5,14 @@ import * as process from 'process';
 import { useContainer } from 'class-validator';
 import { setupSwagger } from './configs/swagger';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
 const { PORT } = process.env;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   app.setGlobalPrefix('/api');
+  app.use(helmet());
 
   app.useGlobalPipes(
     new ValidationPipe({
