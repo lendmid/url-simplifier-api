@@ -9,11 +9,15 @@ import helmet from 'helmet';
 
 const { PORT } = process.env;
 
+const origins = ['3-n.in'];
+if (process.env.NODE_ENV === 'development')
+  origins.push('http://localhost:5173');
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api');
   app.use(helmet());
-  app.enableCors({ origin: ['3-n.in'] });
+  app.enableCors({ origin: origins });
 
   app.useGlobalPipes(
     new ValidationPipe({
