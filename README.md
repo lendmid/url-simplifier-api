@@ -15,7 +15,7 @@
 ### Source code
 
 - [Main repo](https://3-n.in/3)
-- [Backend, API](https://3-n.in/2): nest.js, typeorm, typescript, sqlite
+- [Backend, API](https://3-n.in/2): nest.js, typeorm, typescript, postgres
 - [Frontend, client](https://3-n.in/4): react, typescript, antd
 
 <br>
