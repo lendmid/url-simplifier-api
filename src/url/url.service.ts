@@ -41,14 +41,14 @@ export class UrlService {
     }
   }
 
-  async getUrls({ pageSize = 5, current = 1 }) {
+  async getUrls({ pageSize = 5, pageNumber = 0 }) {
     try {
       const [urls, total] = await this.repo.findAndCount({
         take: pageSize,
-        skip: current - 1,
+        skip: pageNumber * pageSize,
         order: { id: 'DESC' },
       });
-      return { urls, pagination: { total, pageSize, current } };
+      return { urls, pagination: { total, pageSize, pageNumber } };
     } catch (error) {
       console.log(error);
       throw new NotFoundException('Urls not found in Data Base', error);

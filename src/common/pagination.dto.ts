@@ -13,5 +13,5 @@ export class PaginationDto {
   @IsOptional()
   @IsInt()
   @ApiProperty({ required: false, default: 0 })
-  readonly current: number;
+  readonly pageNumber: number;
 }
