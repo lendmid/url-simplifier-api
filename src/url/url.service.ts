@@ -37,7 +37,7 @@ export class UrlService {
       return url;
     } catch (error) {
       console.log(error);
-      throw new UnprocessableEntityException('Server Error', error);
+      throw new UnprocessableEntityException('Could not save the URL', error);
     }
   }
 
@@ -51,22 +51,19 @@ export class UrlService {
       return { urls, pagination: { total, pageSize, current } };
     } catch (error) {
       console.log(error);
-      throw new NotFoundException('Urls Not Found', error);
+      throw new NotFoundException('Urls not found in Data Base', error);
     }
   }
 
   async getLongUrl(hash: string) {
     try {
-      const url = await this.repo.findOneBy({ hash });
-      if (url) {
-        url.visited = url.visited ? (url.visited += 1) : 1;
-        await this.repo.save(url);
-        return url;
-      }
-      throw new NotFoundException('Url Not Found in Data Base');
+      const url = await this.repo.findOneByOrFail({ hash });
+      url.visited = url.visited ? (url.visited += 1) : 1;
+      await this.repo.save(url);
+      return url;
     } catch (error) {
       console.log(error);
-      throw new NotFoundException('Url Not Found in Data Base', error);
+      throw new NotFoundException('Urls not found in Data Base', error);
     }
   }
 }
