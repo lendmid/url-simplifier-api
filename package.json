@@ -37,8 +37,8 @@
     "helmet": "^7.1.0",
     "is-url": "^1.2.4",
     "joi": "^17.13.1",
-    "reflect-metadata": "^0.1.13",
-    "sqlite3": "^5.1.7"
+    "pg": "^8.11.5",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

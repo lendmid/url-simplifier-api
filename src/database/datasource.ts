@@ -1,12 +1,15 @@
 import { DataSource } from 'typeorm';
 
 export const AppDataSource = new DataSource({
-  type: 'sqlite',
-  database: 'urls.sqlite',
-  synchronize: false,
-  entities: ['./**/*.entity.js'],
+  type: 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  entities: ['./**/*.entity.*{.ts,.js}'],
   migrations: ['src/database/migrations/*{.ts,.js}'],
-  migrationsRun: true,
+  synchronize: false,
 });
 
 AppDataSource.initialize()
