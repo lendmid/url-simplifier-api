@@ -19,8 +19,11 @@ export class UrlService {
   ) {}
 
   async shortUrl(url: URLDto, origin: string) {
-    const { longUrl } = url;
+    let { longUrl } = url;
 
+    if (!longUrl.includes('http://') && !longUrl.includes('https://')) {
+      longUrl = 'http://' + longUrl;
+    }
     if (!isUrl(longUrl)) {
       throw new BadRequestException('Should be provided a valid URL');
     }
