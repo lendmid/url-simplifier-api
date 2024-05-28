@@ -11,9 +11,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UrlService } from './url.service';
-import { URLDto } from './dtos/url.dto';
+import { URLBatchDto, URLDto } from './dtos/url.dto';
 import { Response } from 'express';
-import { ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { PaginationDto } from 'src/common/pagination.dto';
 
 @ApiTags('Urls')
@@ -50,5 +50,11 @@ export class UrlController {
   @Delete('urls/:id')
   async deleteUrl(@Param('id') id: number) {
     return this.service.deleteUrl(id);
+  }
+
+  @Post('urls/batch')
+  @ApiBody({ type: URLBatchDto, isArray: true })
+  async past(@Body() urls: URLBatchDto[]) {
+    return this.service.batchUrls(urls);
   }
 }

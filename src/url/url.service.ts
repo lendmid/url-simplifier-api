@@ -7,7 +7,7 @@ import {
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Url } from './url.entity';
-import { URLDto } from './dtos/url.dto';
+import { URLBatchDto, URLDto } from './dtos/url.dto';
 import isUrl from 'is-url';
 import base62 from 'base62/lib/ascii';
 
@@ -90,6 +90,31 @@ export class UrlService {
     } catch (error) {
       console.log(error);
       throw new NotFoundException('Could not delete the URL', error);
+    }
+  }
+
+  async batchUrls(urls: URLBatchDto[]) {
+    urls.forEach((url) => {
+      if (
+        !url.longUrl.includes('http://') &&
+        !url.longUrl.includes('https://')
+      ) {
+        url.longUrl = 'http://' + url.longUrl;
+      }
+      if (!isUrl(url.longUrl) || !isUrl('http://' + url.shortUrl)) {
+        throw new BadRequestException('Should be provided a valid URLs');
+      }
+    });
+    try {
+      return await this.repo
+        .createQueryBuilder()
+        .insert()
+        .into(Url)
+        .values(urls)
+        .execute();
+    } catch (error) {
+      console.log(error);
+      throw new NotFoundException('Could not insert the URLs', error);
     }
   }
 }
